@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Partner Pre-Sales Hub | Interactive Handbook</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Warm Corporate Tech 
+         Primary: Orange (Pure Brand), Secondary: Slate/Gray, Background: Off-white/White
+    -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Chart Container Logic per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Tailwind max-w-xl approx */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Animation utilities */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .nav-item.active {
+            background-color: #fff7ed; /* orange-50 */
+            color: #ea580c; /* orange-600 */
+            border-left: 4px solid #ea580c;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Application Structure Plan:
+         1. Layout: Sidebar Navigation (Desktop) / Hamburger (Mobile) + Main Content Area.
+         2. Dashboard: High-level metrics, quick tools, and search.
+         3. Training Tracker: Interactive Chart.js visualization for Elite Partner goals.
+         4. Knowledge Base: Filterable list/grid of the technical links (FlashArray, FlashBlade, etc.).
+         5. Tools: Card grid for external tools.
+         Rationale: The handbook is a reference tool. Users need to find things quickly (Search/KB) or track progress (Training). 
+         The structure flattens the nested Word doc into actionable views.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Top Header -->
+    <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-orange-600 rounded flex items-center justify-center text-white font-bold text-xl">P</div>
+            <h1 class="font-bold text-lg tracking-tight text-slate-900 hidden sm:block">Pure Partner <span class="text-orange-600">Hub</span></h1>
+        </div>
+        
+        <div class="flex-1 max-w-xl mx-4">
+            <div class="relative">
+                <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+                <input type="text" id="globalSearch" placeholder="Search handbook (e.g., 'Sizing', 'FlashBlade', 'Ports')..." 
+                    class="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-lg focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm">
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full">
+            Oct 2025 Edition
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <nav class="w-64 bg-white border-r border-slate-200 flex-col hidden md:flex z-10">
+            <div class="p-4 space-y-1">
+                <button onclick="router('dashboard')" id="nav-dashboard" class="nav-item active w-full text-left px-4 py-3 rounded-r-lg font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span>📊</span> Dashboard
+                </button>
+                <button onclick="router('training')" id="nav-training" class="nav-item w-full text-left px-4 py-3 rounded-r-lg font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span>🎓</span> Training Tracker
+                </button>
+                <button onclick="router('library')" id="nav-library" class="nav-item w-full text-left px-4 py-3 rounded-r-lg font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span>📚</span> Technical Library
+                </button>
+                <button onclick="router('tools')" id="nav-tools" class="nav-item w-full text-left px-4 py-3 rounded-r-lg font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span>🛠️</span> Tools & Apps
+                </button>
+            </div>
+            
+            <div class="mt-auto p-6 border-t border-slate-100">
+                <div class="bg-blue-50 p-4 rounded-lg text-xs text-blue-800">
+                    <strong class="block mb-1">Quick Tip:</strong>
+                    Console Settings: <br>
+                    <code class="bg-white px-1 rounded border border-blue-100">115200, 8-N-1</code>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="mainContent" class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 scroll-smooth">
+            <!-- Content Injected via JS -->
+        </main>
+    </div>
+
+    <!-- Visualization & Content Choices:
+         1. Dashboard: Uses HTML/Tailwind cards for quick entry. Goal: Immediate value.
+         2. Training Tracker: Uses Chart.js Bar Chart. Goal: Compare User Actual vs Elite Requirements. Interaction: Input fields update chart.
+         3. Library: Uses JS Filterable Grid. Goal: Find specific links in the dense text.
+         4. Tools: Visual Cards. Goal: Launch external apps.
+    -->
+
+    <script>
+        // --- State Management ---
+        const state = {
+            currentView: 'dashboard',
+            searchQuery: '',
+            // Training Goals (Defaults for Zone A from doc)
+            userProgress: { sales: 2, tech: 1, bootcamp: 0, install: 1 },
+            requirements: { sales: 10, tech: 8, bootcamp: 4, install: 10 } 
+        };
+
+        // --- Data Source (Extracted from Handbook) ---
+        const handbookData = {
+            quickLinks: [
+                { title: "Partner Central", url: "https://purestorage.my.site.com/partners/s/", icon: "🏢", desc: "Deal Reg & Marketing" },
+                { title: "Support Portal", url: "https://support.purestorage.com/", icon: "🚑", desc: "Knowledge Base" },
+                { title: "Test Drive", url: "https://testdrive.purestorage.com", icon: "🏎️", desc: "Virtual Labs" },
+                { title: "Sizing Tool", url: "https://purestorage.my.site.com/sales/s/tools", icon: "📏", desc: "Capacity Planning" }
+            ],
+            library: [
+                { category: "FlashArray (Block)", title: "Purity//FA Docs", url: "https://support.purestorage.com/FlashArray/PurityFA", tags: "admin, guide" },
+                { category: "FlashArray (Block)", title: "Release Notes", url: "https://support.purestorage.com/bundle/m_flasharray_release/page/FlashArray/topics/concept/c_flasharray_release.html", tags: "updates, version" },
+                { category: "FlashArray (Block)", title: "Hardware Docs (//X, //C, //XL)", url: "https://support.purestorage.com/FlashArray/FlashArray_Hardware", tags: "specs, shelves" },
+                { category: "FlashArray (Block)", title: "Capacity & Limits", url: "https://support.purestorage.com/bundle/m_flasharray_limits/page/FlashArray/FlashArray_Capacity_and_Feature_Limits/topics/o_flasharray_limits.html", tags: "limits, max" },
+                { category: "FlashArray (Block)", title: "Network Ports (TCP/UDP)", url: "https://support.purestorage.com/bundle/m_flasharray_connectivity/page/c_flasharray_tcp_and_udp_port_assignments.html", tags: "firewall, network" },
+                { category: "FlashArray (File)", title: "File Services Main", url: "https://support.purestorage.com/FlashArray/PurityFA/FlashArray_File_Services", tags: "nfs, smb" },
+                { category: "FlashArray (File)", title: "Support Matrix", url: "https://support.purestorage.com/bundle/m_flasharray_file_services/page/FlashArray/PurityFA/FlashArray_File_Services/Configuration/topics/topic/t_FA_File_-_Support_Matrix.html", tags: "compatibility" },
+                { category: "FlashBlade", title: "Compatibility Matrix", url: "https://support.purestorage.com/bundle/m_getting_started_with_flashblade/page/FlashBlade/Getting_Started_with_FlashBlade/topics/concept/c_flashblade_compatibility_matrix.html", tags: "support" },
+                { category: "FlashBlade", title: "Hardware Docs", url: "https://support.purestorage.com/FlashBlade/FlashBlade_Hardware", tags: "chassis, blade" },
+                { category: "Replication", title: "ActiveCluster Overview", url: "https://support.purestorage.com/FlashArray/PurityFA/Replication/ActiveCluster/001_Overview", tags: "bcdr, metro" },
+                { category: "Replication", title: "ActiveDR Best Practices", url: "https://support.purestorage.com/FlashArray/FlashArray_Release/FlashArray_Release_Information/library/common_content/c_activedr_installation_planning_and_best_practices_guide.html", tags: "dr, disaster recovery" },
+                { category: "Integration", title: "VMware Platform Guide", url: "https://support.purestorage.com/Solutions/VMware_Platform_Guide", tags: "vsphere, esxi" },
+                { category: "Integration", title: "Portworx Docs", url: "https://docs.portworx.com/", tags: "kubernetes, k8s" },
+                { category: "Cloud", title: "Pure Cloud Block Store (AWS)", url: "https://www.purestorage.com/resources/type-a/pure-storage-cloud-block-store-aws-solution-overview.html", tags: "cbs, cloud" }
+            ],
+            tools: [
+                { title: "Pure Test Drive", url: "https://testdrive.purestorage.com", desc: "On-demand virtual labs. FlashArray, FlashBlade, Veeam integration, and more. Labs expire after 2 hours (can be extended).", type: "Demo" },
+                { title: "Sizing Tool", url: "https://purestorage.my.site.com/sales/s/tools", desc: "Calculate capacity, growth, and hardware requirements for FA and FB.", type: "Planning" },
+                { title: "Rack Diagram Builder", url: "https://sile16.github.io/purerackdiagram/", desc: "Unofficial visualizer to build rack layouts for customer documentation.", type: "Design" },
+                { title: "FlashArray 3D Tour", url: "https://apps.apple.com/us/app/pure-storage-flasharray-tour/id964925778", desc: "Interactive hardware demo app (iOS/Android).", type: "Mobile App" },
+                { title: "Pure Code", url: "https://code.purestorage.com/", desc: "Scripts for Terraform, Ansible, Python, PowerShell.", type: "Dev" }
+            ]
+        };
+
+        // --- Chart Instance (Global to allow updates) ---
+        let trainingChart = null;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            router('dashboard'); // Initial load
+            
+            // Search Listener
+            document.getElementById('globalSearch').addEventListener('input', (e) => {
+                state.searchQuery = e.target.value.toLowerCase();
+                if (state.searchQuery.length > 0) {
+                    renderLibrary(true); // Switch to library view filtered
+                } else {
+                    if (state.currentView === 'library') renderLibrary(); // Clear filter
+                }
+            });
+        });
+
+        // --- Router ---
+        function router(viewName) {
+            state.currentView = viewName;
+            state.searchQuery = ''; // Clear search on nav
+            document.getElementById('globalSearch').value = '';
+
+            // Update Nav UI
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${viewName}`);
+            if(activeNav) activeNav.classList.add('active');
+
+            // Render View
+            const main = document.getElementById('mainContent');
+            main.innerHTML = ''; // Clear current
+            
+            // Mobile close (if we had a mobile menu, omitted for simplicity in this file)
+
+            switch(viewName) {
+                case 'dashboard': renderDashboard(main); break;
+                case 'training': renderTraining(main); break;
+                case 'library': renderLibrary(false, main); break;
+                case 'tools': renderTools(main); break;
+            }
+        }
+
+        // --- Views ---
+
+        function renderDashboard(container) {
+            container.innerHTML = `
+                <div class="fade-in max-w-5xl mx-auto space-y-8">
+                    <!-- Hero -->
+                    <div class="bg-gradient-to-r from-orange-600 to-orange-500 rounded-2xl p-8 text-white shadow-lg">
+                        <h2 class="text-3xl font-bold mb-2">Welcome to the Partner Pre-Sales Hub</h2>
+                        <p class="opacity-90 max-w-2xl text-lg">Your central access point for technical documentation, sizing tools, and certification tracking.</p>
+                        <div class="mt-6 flex flex-wrap gap-2 text-sm opacity-80">
+                            <span class="bg-white/20 px-3 py-1 rounded-full">Updated Oct 2025</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full">Zone A Requirements</span>
+                        </div>
+                    </div>
+
+                    <!-- Introduction Context -->
+                    <div class="prose max-w-none text-slate-600">
+                        <p>This interactive hub consolidates the <strong>Technical Handbook for Pure Partners</strong>. Use the navigation to track your Elite Partner certification progress, browse the technical library, or launch essential sales tools.</p>
+                    </div>
+
+                    <!-- Quick Links Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${handbookData.quickLinks.map(link => `
+                            <a href="${link.url}" target="_blank" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-orange-500 hover:shadow-md transition-all group">
+                                <div class="text-3xl mb-3 group-hover:scale-110 transition-transform duration-200">${link.icon}</div>
+                                <h3 class="font-bold text-slate-800">${link.title}</h3>
+                                <p class="text-xs text-slate-500 mt-1">${link.desc}</p>
+                            </a>
+                        `).join('')}
+                    </div>
+
+                    <!-- Quick Reference Section -->
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="font-bold text-lg mb-4 text-slate-800 flex items-center gap-2">
+                            <span>⚡</span> Quick Technical References
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-slate-700 mb-2">Console Connection</h4>
+                                <div class="text-xs font-mono text-slate-600 space-y-2">
+                                    <p>Baud: 115200 | Data: 8 | Parity: None | Stop: 1</p>
+                                    <p class="bg-white p-2 border rounded">screen /dev/tty.usbserial 115200</p>
+                                    <p class="text-slate-400 italic">Note: Check /dev/*usb* for exact device name on Mac.</p>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-semibold text-slate-700 mb-2">Recommended Training</h4>
+                                <ul class="text-sm text-slate-600 space-y-1 list-disc pl-4">
+                                    <li>Pure Fundamentals (1 hr)</li>
+                                    <li>FlashArray Foundations (3 hrs)</li>
+                                    <li>FlashBlade Foundations (2 hrs)</li>
+                                    <li>Pure Fusion Foundations (30 mins)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTraining(container) {
+            container.innerHTML = `
+                <div class="fade-in max-w-5xl mx-auto space-y-6">
+                    <div class="flex justify-between items-end border-b border-slate-200 pb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-900">Training & Certification Tracker</h2>
+                            <p class="text-slate-500 mt-1">Simulate your progress towards Elite Partner Status (Zone A).</p>
+                        </div>
+                        <a href="https://purestorage.my.site.com/partners/s/learn/training-and-certification/program-training" target="_blank" class="text-orange-600 hover:text-orange-700 font-medium text-sm flex items-center gap-1">
+                            Go to Partner Academy <span>↗</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Controls -->
+                        <div class="lg:col-span-1 bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-fit">
+                            <h3 class="font-bold text-lg mb-4">Update Your Status</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Sales Accreditations</label>
+                                    <div class="flex items-center gap-3">
+                                        <button onclick="updateProgress('sales', -1)" class="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold">-</button>
+                                        <span id="val-sales" class="font-mono text-lg font-bold w-6 text-center">${state.userProgress.sales}</span>
+                                        <button onclick="updateProgress('sales', 1)" class="w-8 h-8 rounded bg-orange-100 hover:bg-orange-200 text-orange-600 font-bold">+</button>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Target: ${state.requirements.sales}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tech Accreditations</label>
+                                    <div class="flex items-center gap-3">
+                                        <button onclick="updateProgress('tech', -1)" class="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold">-</button>
+                                        <span id="val-tech" class="font-mono text-lg font-bold w-6 text-center">${state.userProgress.tech}</span>
+                                        <button onclick="updateProgress('tech', 1)" class="w-8 h-8 rounded bg-orange-100 hover:bg-orange-200 text-orange-600 font-bold">+</button>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Target: ${state.requirements.tech}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Installations</label>
+                                    <div class="flex items-center gap-3">
+                                        <button onclick="updateProgress('install', -1)" class="w-8 h-8 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold">-</button>
+                                        <span id="val-install" class="font-mono text-lg font-bold w-6 text-center">${state.userProgress.install}</span>
+                                        <button onclick="updateProgress('install', 1)" class="w-8 h-8 rounded bg-orange-100 hover:bg-orange-200 text-orange-600 font-bold">+</button>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-1">Target: ${state.requirements.install}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visualization -->
+                        <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                            <h3 class="font-bold text-lg mb-2 text-center">Gap Analysis: Current vs Elite Requirement</h3>
+                            <!-- Chart Container -->
+                            <div class="chart-container">
+                                <canvas id="trainingChartCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            initChart();
+        }
+
+        function renderLibrary(isSearch = false, container = document.getElementById('mainContent')) {
+            // If triggered by search, don't wipe container fully if it's already library, just inner grid
+            // But for simplicity of this logic, we re-render full view.
+            
+            // Filter Data
+            let data = handbookData.library;
+            let title = "Technical Library";
+            let subtitle = "Direct access to support documentation, release notes, and integration guides.";
+
+            if (state.searchQuery) {
+                const q = state.searchQuery;
+                data = data.filter(item => 
+                    item.title.toLowerCase().includes(q) || 
+                    item.category.toLowerCase().includes(q) ||
+                    item.tags.toLowerCase().includes(q)
+                );
+                title = `Search Results for "${q}"`;
+                subtitle = `${data.length} resources found.`;
+                state.currentView = 'library';
+                
+                // Update nav
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                document.getElementById('nav-library').classList.add('active');
+            }
+
+            // Grouping Logic
+            const groups = {};
+            data.forEach(item => {
+                if (!groups[item.category]) groups[item.category] = [];
+                groups[item.category].push(item);
+            });
+
+            container.innerHTML = `
+                <div class="fade-in max-w-5xl mx-auto space-y-6">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h2 class="text-2xl font-bold text-slate-900">${title}</h2>
+                        <p class="text-slate-500 mt-1">${subtitle}</p>
+                    </div>
+
+                    ${Object.keys(groups).length === 0 ? 
+                        `<div class="p-12 text-center text-slate-400">No documents found matching your search.</div>` 
+                        : ''}
+
+                    <div class="masonry-grid space-y-8">
+                        ${Object.keys(groups).map(category => `
+                            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                                <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center gap-2">
+                                    <span class="font-bold text-slate-700">${category}</span>
+                                </div>
+                                <div class="divide-y divide-slate-100">
+                                    ${groups[category].map(item => `
+                                        <a href="${item.url}" target="_blank" class="block p-4 hover:bg-orange-50 transition-colors group">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm font-medium text-slate-800 group-hover:text-orange-700">${item.title}</span>
+                                                <span class="text-slate-300 group-hover:text-orange-400">↗</span>
+                                            </div>
+                                            <div class="mt-1 flex gap-2">
+                                                ${item.tags.split(',').map(tag => 
+                                                    `<span class="text-[10px] uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-sm">${tag.trim()}</span>`
+                                                ).join('')}
+                                            </div>
+                                        </a>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTools(container) {
+            container.innerHTML = `
+                <div class="fade-in max-w-5xl mx-auto space-y-6">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h2 class="text-2xl font-bold text-slate-900">Tools & Utilities</h2>
+                        <p class="text-slate-500 mt-1">Essential applications for sizing, demonstrating, and designing solutions.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        ${handbookData.tools.map(tool => `
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col h-full hover:border-orange-400 transition-colors">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-bold text-lg text-slate-900">${tool.title}</h3>
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded uppercase">${tool.type}</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-6 flex-grow">${tool.desc}</p>
+                                <a href="${tool.url}" target="_blank" class="text-center w-full bg-slate-900 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition-colors">
+                                    Launch Tool
+                                </a>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Chart Logic ---
+
+        function initChart() {
+            const ctx = document.getElementById('trainingChartCanvas');
+            if (!ctx) return;
+
+            // Destroy existing if any
+            if (trainingChart) trainingChart.destroy();
+
+            trainingChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sales Accred.', 'Tech Accred.', 'Installations'],
+                    datasets: [
+                        {
+                            label: 'Your Progress',
+                            data: [state.userProgress.sales, state.userProgress.tech, state.userProgress.install],
+                            backgroundColor: '#ea580c', // Orange 600
+                            borderRadius: 4,
+                        },
+                        {
+                            label: 'Elite Requirement',
+                            data: [state.requirements.sales, state.requirements.tech, state.requirements.install],
+                            backgroundColor: '#e2e8f0', // Slate 200
+                            borderRadius: 4,
+                            borderWidth: 1,
+                            borderColor: '#cbd5e1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 12, // slightly higher than max req (10)
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)', // Slate 900
+                            titleFont: { family: 'Inter', size: 13 },
+                            bodyFont: { family: 'Inter', size: 12 },
+                            padding: 10,
+                            cornerRadius: 4
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateProgress(type, delta) {
+            const current = state.userProgress[type];
+            const newVal = current + delta;
+            if (newVal < 0) return;
+            
+            // Update State
+            state.userProgress[type] = newVal;
+            
+            // Update UI Number
+            document.getElementById(`val-${type}`).innerText = newVal;
+            
+            // Update Chart
+            if (trainingChart) {
+                // Dataset 0 is 'Your Progress'
+                const indexMap = { 'sales': 0, 'tech': 1, 'install': 2 };
+                trainingChart.data.datasets[0].data[indexMap[type]] = newVal;
+                trainingChart.update();
+            }
+        }
+
+    </script>
+</body>
+</html>Pure 
