@@ -17,7 +17,15 @@
     -->
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            /* Background Image Setup */
+            background-color: #f8fafc; /* Fallback color */
+            background-image: url('image_a31ce7.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
         
         /* Custom Scrollbar for cleaner look */
         ::-webkit-scrollbar { width: 8px; }
@@ -88,7 +96,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+<body class="text-slate-800 h-screen flex flex-col overflow-hidden">
 
     <!-- Application Structure Plan:
          1. Layout: Sidebar Navigation (Desktop) / Hamburger (Mobile) + Main Content Area.
@@ -148,7 +156,7 @@
         </nav>
 
         <!-- Main Content Area -->
-        <main id="mainContent" class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 scroll-smooth">
+        <main id="mainContent" class="flex-1 overflow-y-auto bg-slate-50/90 p-4 md:p-8 scroll-smooth">
             <!-- Content Injected via JS -->
         </main>
     </div>
@@ -356,24 +364,72 @@
                         <h3 class="font-bold text-lg mb-4 text-slate-800 flex items-center gap-2">
                             <span>⚡</span> Quick Technical References
                         </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-slate-50 p-4 rounded-lg">
-                                <h4 class="text-sm font-semibold text-slate-700 mb-2">Console Connection</h4>
-                                <div class="text-xs font-mono text-slate-600 space-y-2">
-                                    <p>Baud: 115200 | Data: 8 | Parity: None | Stop: 1</p>
-                                    <p class="bg-white p-2 border rounded">screen /dev/tty.usbserial 115200</p>
-                                    <p class="text-slate-400 italic">Note: Check /dev/*usb* for exact device name on Mac.</p>
-                                </div>
-                            </div>
-                            <div class="bg-slate-50 p-4 rounded-lg">
-                                <h4 class="text-sm font-semibold text-slate-700 mb-2">Recommended Training</h4>
-                                <ul class="text-sm text-slate-600 space-y-1 list-disc pl-4">
-                                    <li>Pure Fundamentals (1 hr)</li>
-                                    <li>FlashArray Foundations (3 hrs)</li>
-                                    <li>FlashBlade Foundations (2 hrs)</li>
-                                    <li>Pure Fusion Foundations (30 mins)</li>
-                                </ul>
-                            </div>
+                        <div class="bg-slate-50 p-6 rounded-lg w-full">
+                            <h4 class="text-sm font-semibold text-slate-700 mb-4 uppercase tracking-wider">Recommended Training</h4>
+                            <ul class="text-sm text-slate-600 space-y-3">
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/path/1324329-pure-fundamentals" target="_blank" class="text-orange-600 font-semibold hover:underline">Pure Fundamentals</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">1 hr</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">Storage Overview, Administration, Monitoring, Troubleshooting and Data Recovery.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/path/1307799-flasharray-foundations" target="_blank" class="text-orange-600 font-semibold hover:underline">FlashArray Foundations</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">3 hrs</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">FlashArray Functionality, FlashArray Administration, ActiveCluster, Virtual Volumes.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/path/1324534-flashblade-foundations" target="_blank" class="text-orange-600 font-semibold hover:underline">FlashBlade Foundations</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">2 hrs</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">Functionality, Administration, Analysis, Admin Tools, Technical Services.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/activity/2103461-pure-fusion-foundations" target="_blank" class="text-orange-600 font-semibold hover:underline">Pure Fusion Foundations</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">30 mins</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">Overview, Concepts, How It Works, Messaging.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/catalog/list?category_ids=40388-pure1" target="_blank" class="text-orange-600 font-semibold hover:underline">Pure1 Demo Video</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">17 mins</span>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/path/1426789-portworx-technical-sales-professional" target="_blank" class="text-orange-600 font-semibold hover:underline">Portworx Technical Sales Professional Path</a>
+                                        <div class="text-slate-500 text-xs mt-0.5">Curated list of courses. Note: “Beyond The Basics” are full courses in themselves.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/path/1481086-beyond-the-basics" target="_blank" class="text-orange-600 font-semibold hover:underline">Kubernetes / Portworx – Beyond The Basics</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">6 hrs</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">Two separate courses, one for Kubernetes, one for Portworx.</div>
+                                    </div>
+                                </li>
+                                <li class="flex flex-col sm:flex-row sm:items-start gap-1">
+                                    <div class="flex-shrink-0 w-2 h-2 mt-2 bg-orange-400 rounded-full mr-2 hidden sm:block"></div>
+                                    <div>
+                                        <a href="https://partneracademy.purestorage.com/student/collection/1364015/path/1929919/activity/1929892" target="_blank" class="text-orange-600 font-semibold hover:underline">Cloud Block Store</a>
+                                        <span class="text-xs text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded ml-2">3.7 hrs</span>
+                                        <div class="text-slate-500 text-xs mt-0.5">Preparation course for the Cloud Block Store Specialist certification.</div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -520,162 +576,6 @@
                 </div>
             `;
             initChart();
-        }
-
-        function renderLibrary(isSearch = false, container = document.getElementById('mainContent')) {
-            // If triggered by search, don't wipe container fully if it's already library, just inner grid
-            // But for simplicity of this logic, we re-render full view.
-            
-            // Filter Data
-            let data = handbookData.library;
-            let title = "Technical Library";
-            let subtitle = "Direct access to support documentation, release notes, and integration guides.";
-
-            if (state.searchQuery) {
-                const q = state.searchQuery;
-                data = data.filter(item => 
-                    item.title.toLowerCase().includes(q) || 
-                    item.category.toLowerCase().includes(q) ||
-                    item.tags.toLowerCase().includes(q)
-                );
-                title = `Search Results for "${q}"`;
-                subtitle = `${data.length} resources found.`;
-                state.currentView = 'library';
-                
-                // Update nav
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                document.getElementById('nav-library').classList.add('active');
-            }
-
-            // Grouping Logic
-            const groups = {};
-            data.forEach(item => {
-                if (!groups[item.category]) groups[item.category] = [];
-                groups[item.category].push(item);
-            });
-
-            container.innerHTML = `
-                <div class="fade-in max-w-5xl mx-auto space-y-6">
-                    <div class="border-b border-slate-200 pb-4">
-                        <h2 class="text-2xl font-bold text-slate-900">${title}</h2>
-                        <p class="text-slate-500 mt-1">${subtitle}</p>
-                    </div>
-
-                    ${Object.keys(groups).length === 0 ? 
-                        `<div class="p-12 text-center text-slate-400">No documents found matching your search.</div>` 
-                        : ''}
-
-                    <div class="masonry-grid space-y-8">
-                        ${Object.keys(groups).map(category => `
-                            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-                                <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center gap-2">
-                                    <span class="font-bold text-slate-700">${category}</span>
-                                </div>
-                                <div class="divide-y divide-slate-100">
-                                    ${groups[category].map(item => `
-                                        <a href="${item.url}" target="_blank" class="block p-4 hover:bg-orange-50 transition-colors group">
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-sm font-medium text-slate-800 group-hover:text-orange-700">${item.title}</span>
-                                                <span class="text-slate-300 group-hover:text-orange-400">↗</span>
-                                            </div>
-                                            <div class="mt-1 flex gap-2">
-                                                ${item.tags.split(',').map(tag => 
-                                                    `<span class="text-[10px] uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-sm">${tag.trim()}</span>`
-                                                ).join('')}
-                                            </div>
-                                        </a>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderTools(container) {
-            container.innerHTML = `
-                <div class="fade-in max-w-5xl mx-auto space-y-6">
-                    <div class="border-b border-slate-200 pb-4">
-                        <h2 class="text-2xl font-bold text-slate-900">Tools & Utilities</h2>
-                        <p class="text-slate-500 mt-1">Essential applications for sizing, demonstrating, and designing solutions.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        ${handbookData.tools.map(tool => `
-                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col h-full hover:border-orange-400 transition-colors">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="font-bold text-lg text-slate-900">${tool.title}</h3>
-                                    <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded uppercase">${tool.type}</span>
-                                </div>
-                                <p class="text-slate-600 text-sm mb-6 flex-grow">${tool.desc}</p>
-                                <a href="${tool.url}" target="_blank" class="text-center w-full bg-slate-900 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition-colors">
-                                    Launch Tool
-                                </a>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- Chart Logic ---
-
-        function initChart() {
-            const ctx = document.getElementById('trainingChartCanvas');
-            if (!ctx) return;
-
-            // Destroy existing if any
-            if (trainingChart) trainingChart.destroy();
-
-            trainingChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Sales Accred.', 'Tech Accred.', 'SE Bootcamp', 'Installations'],
-                    datasets: [
-                        {
-                            label: 'Your Progress',
-                            data: [state.userProgress.sales, state.userProgress.tech, state.userProgress.bootcamp, state.userProgress.install],
-                            backgroundColor: '#ea580c', // Orange 600
-                            borderRadius: 4,
-                        },
-                        {
-                            label: 'Elite Requirement',
-                            data: [state.requirements.sales, state.requirements.tech, state.requirements.bootcamp, state.requirements.install],
-                            backgroundColor: '#e2e8f0', // Slate 200
-                            borderRadius: 4,
-                            borderWidth: 1,
-                            borderColor: '#cbd5e1'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 12, // slightly higher than max req (10)
-                            grid: { color: '#f1f5f9' }
-                        },
-                        x: {
-                            grid: { display: false }
-                        }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)', // Slate 900
-                            titleFont: { family: 'Inter', size: 13 },
-                            bodyFont: { family: 'Inter', size: 12 },
-                            padding: 10,
-                            cornerRadius: 4
-                        }
-                    }
-                }
-            });
         }
 
         function updateProgress(type, delta) {
